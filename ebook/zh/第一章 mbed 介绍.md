@@ -1,6 +1,7 @@
 # 1 mbed介绍 #
 ## 1.1 什么是mbed ##
 mbed是什么?
+
 &emsp;&emsp;mbed是一个面向ARM处理器的原型开发平台，它具体包括免费的软件库（SDK），硬件参考设计（HDK）和在线工具（Web）三部分内容，各个部分的具体介绍如下：
 
 &emsp;&emsp;SDK：mbed设计了一个硬件抽象层，从而屏蔽了不同mcu厂商提供了微处理之间的差异，对于用户来说，他只需要和这个硬件抽象层打交道即可，也就是说，用户基于mbed开发的应用可以很方便地更换使用不同厂商的arm微处理器，从而留给用户更多的选择。
@@ -12,10 +13,11 @@ mbed是什么?
 mbed的体系结构
 &emsp;&emsp;mBed是ARM公司官方提供的一套用于快速开发ARM架构单片机应用原型的工具集，包括免费的软件库（Software Development Kit,SDK），硬件设计参考（Hardware Development Kit,HDK）和基于Web的在线编译环境（mBed Compiler）三部分具体内容。所以，在不同的上下文中，mBed有可能指的是mBed SDK，也有可能指的是mBed开发板。由于mBed的代码和大部分硬件设计都是以开源（Open Source，permissive Apache 2.0 licence）的方式提供的，再加上它面向的ARM系列单片机具有较高的性价比和广泛的应用基础，所以mBed在世界范围内已经吸引了大量的电子产品开发者，其产业生态链已经初级规模。
    
- mBed SDK
+mBed SDK
 &emsp;&emsp;mBed SDK是一个面向C/C++的单片机软件开发框架，它建立在大量牛人开发的代码之上，可以让我们快速地开发各种基于ARM的单片机应用项目。mBed SDK已经帮我们完成了启动代码的编写，相关运行库的封装和单片机外设的抽象，从而使我们抽出更多的时间来关注具体的项目应用。而且，更为关键的是，mBed SDK采用开源的permissive Apache 2.0 licence，从而使我们既可以把它应用于个人学习，也可以应用于商业研发，为日后的产品销售做好准备。
 
 &emsp;&emsp;下面是一个基于mBed SDK开发的LED（发光二极管）闪烁程序，同样的功能，如果我们从头开始编写那可能需要上百行代码，而这里只需要10行，而且代码清晰易懂，更接近人的思维方式，这足以显示mBed SDK的强大：
+
 ```{c}
 #include "mbed.h"
  DigitalOut myled(LED1);
@@ -28,6 +30,7 @@ mbed的体系结构
     }
 }
 ```
+
 &emsp;&emsp;mBed SDK当前已经支持大量的单片机，包括NXP公司的LPC11UXX、LPC11XX、LPC11CXX、LPC13XX、LPC23XX、LPC43XX、LPC81X、LPC176X、LPC408X系列，ST公司的STM32F030R8、STM32F103R8、STM32F401RE、STM32L152RE、STM32F4XX系列，FREESCALE公司的MK20D5M、MKL05Z、MKL25Z、MKL46Z系列，NORDIC公司的NRF51822，而且还在不断增加中，当然，即使mBed SDK不支持的单片机，用户也可以自行移植使用，所以mBed SDK具有很大的应用范围。
 虽然mBed官方推荐使用它提供的在线开发工具进行开发，这虽然省去了用户安装开发环境需要的时间，但由于所有的代码都需要放在云端，而且只有联网的计算机才能使用，所以国人并不习惯，这也是mBed迟迟没有在国内流行起来的重要原因，好在国内的SMeshLink公司已经开发出了基于Eclipse和Gcc的离线IDE环境，从而为mBed的国内流行扫清了障碍，当然，如果你要使用的MCU 不支持GCC编译mBed SDK，那就需要自行添加启动文件和链接文件后才能使用，该环境当前主要支持GCC ARM Embedded编译器。
 
@@ -50,6 +53,7 @@ mBed Compiler
 ## 1.3 mbed SDK体系结构 ##
 
 &emsp;&emsp;为了更好地利用mbed sdk进行开发，我们有必要了解一下mbed sdk的设计理念及目录结构。mbed sdk的最大价值在于提供一个面向微处理器硬件的抽象层，从而使用户在开发具体应用时无需了解具体的硬件结构，从这点上来看，用户开发mbed应用程序和开发windows应用程序并无太大的不同，其具体结构如下：
+
 ![mbed 体系结构](../figures/mbed.png)
 
 &emsp;&emsp;具体来说，mbed/api目录中存放的是用户需要调用的mbed相关的.h头文件，mbed/commpn目录中存放的是这些.h文件的具体实现，它会调用mbed/hal中的.h文件，而mbed/targets/hal中存放的则是mbed/hal中这些.h文件的具体实现，不同的mcu需要不同的实现，同一mcu不同应用板也需要不同的实现，而mbed/targets/cmsis中存放的则是mcu与外设之间的接口及启动链接文件，其中的代码不但与mcu相关，还有具体的编译器相关，所以同一个mcu下还有多个目录。
